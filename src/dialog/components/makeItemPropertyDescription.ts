@@ -16,7 +16,13 @@ const makeItemPropertyDescription = (key: string, value: string | number) => {
 		} else if (value === ModelType.Tag) {
 			description = 'tag';
 		}
-	} else if (key === 'created_time' || key === 'updated_time') {
+	} else if (
+		key === 'created_time' ||
+		key === 'updated_time' ||
+		key === 'user_created_time' ||
+		key === 'user_updated_time' ||
+		key === 'deleted_time'
+	) {
 		description = new Date(value).toLocaleString();
 	} else if (key === 'size' && typeof value === 'number') {
 		if (value > 1024 * 1024) {

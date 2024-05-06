@@ -127,14 +127,18 @@ const makeItemTable = async (itemId: string): Promise<HTMLTableElement | Node> =
 			},
 			true,
 		);
-		addActionButton(
-			localization.deleteToTrash,
-			async () => {
-				await webviewApi.postMessage({ type: PanelMessageType.DeleteItemToTrash, itemId });
-				await goToItem(itemId);
-			},
-			true,
-		);
+
+		// Resources can't be deleted to trash
+		if (metadata.type_ === ModelType.Folder || metadata.type_ === ModelType.Note) {
+			addActionButton(
+				localization.deleteToTrash,
+				async () => {
+					await webviewApi.postMessage({ type: PanelMessageType.DeleteItemToTrash, itemId });
+					await goToItem(itemId);
+				},
+				true,
+			);
+		}
 	}
 
 	addTableRow('actions', actionButtonContainer);

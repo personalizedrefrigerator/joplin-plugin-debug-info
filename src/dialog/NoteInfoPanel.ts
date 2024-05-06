@@ -67,10 +67,23 @@ export default class ItemInfoDialog {
 			const type = await joplin.data.itemType(message.itemId);
 			let fields = ['id', 'encryption_applied', 'is_shared', 'updated_time', 'created_time'];
 			if (type === ModelType.Note || type === ModelType.Folder) {
-				fields.push('parent_id', 'title');
+				fields.push('parent_id', 'title', 'deleted_time');
 
 				if (type === ModelType.Note) {
-					fields.push('todo_completed', 'todo_due', 'source_application', 'source_url');
+					fields.push(
+						'author',
+						'altitude',
+						'latitude',
+						'longitude',
+						'markup_language',
+						'todo_completed',
+						'todo_due',
+						'source_application',
+						'source_url',
+						'is_conflict',
+						'user_created_time',
+						'user_updated_time',
+					);
 				}
 			} else if (type === ModelType.Resource) {
 				fields.push(
@@ -129,7 +142,12 @@ export default class ItemInfoDialog {
 			if (!pathName) throw new Error(`Unable to delete item with type ${type}`);
 
 			const permanent = message.type === PanelMessageType.PermanentDeleteItem;
-			await joplin.data.delete([pathName, message.itemId], { toTrash: !permanent });
+			if (type !== ModelType.Note && type !== ModelType.Folder && !permanent) {
+				throw new Error(
+					`Refusing to permanently delete an item of type ${type}, when to-trash was requested.`,
+				);
+			}
+			await joplin.data.delete([pathName, message.itemId], { permanent: permanent ? '1' : false });
 			return null;
 		} else {
 			throw new Error(`Unknown message type, ${message}.`);

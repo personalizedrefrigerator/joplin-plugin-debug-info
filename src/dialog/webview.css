@@ -5,6 +5,9 @@
 body {
 	overflow: auto;
 	max-height: 100vh;
+
+	scrollbar-color: var(--joplin-color3) var(--joplin-background-color3);
+	scrollbar-width: thin;
 }
 
 table {
@@ -21,7 +24,7 @@ table td,
 table th {
 	border: 1px solid var(--joplin-color);
 	margin: 0;
-	padding: 15px;
+	padding: 9px;
 }
 
 .item-property-description {
@@ -36,5 +39,9 @@ table th {
 
 .item-property-description > .description {
 	font-style: italic;
+	opacity: 0.9;
+}
+
+.item-id-input-container label {
 	opacity: 0.9;
 }
