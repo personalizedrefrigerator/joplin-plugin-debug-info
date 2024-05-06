@@ -1,19 +1,16 @@
 import joplin from 'api';
 import { MenuItemLocation } from 'api/types';
 import NoteInfoPanel from './dialog/NoteInfoPanel';
+import localization from './localization';
 
 joplin.plugins.register({
 	onStart: async function () {
-		let panel: NoteInfoPanel | null = null;
+		const panel: NoteInfoPanel = await NoteInfoPanel.create();
 		await joplin.commands.register({
 			name: 'noteInfo',
-			label: 'Note info',
+			label: localization.toggleNoteInfo,
 			execute: async () => {
-				if (!panel) {
-					panel = await NoteInfoPanel.create();
-				} else {
-					await panel.toggle();
-				}
+				await panel.toggle();
 			},
 		});
 

@@ -1,9 +1,20 @@
 interface AppLocalization {
-	parentIds: string;
+	permanentlyDelete: string;
+	deleteToTrash: string;
+	go: string;
+	toggleNoteInfo: string;
+	noteInfoHeader: string;
+	continueDangerousAction: (actionName: string, itemTitle: string) => string;
 }
 
 const defaultStrings: AppLocalization = {
-	parentIds: 'Parent IDs',
+	permanentlyDelete: 'Permanently delete',
+	deleteToTrash: 'Delete to trash',
+	go: 'Go',
+	toggleNoteInfo: 'Show/hide note info',
+	noteInfoHeader: 'Note info plugin',
+	continueDangerousAction: (actionName, itemTitle) =>
+		`${actionName} ${itemTitle}.\nContiue? This may lead to data loss.`,
 };
 
 const localizations: Record<string, AppLocalization> = {

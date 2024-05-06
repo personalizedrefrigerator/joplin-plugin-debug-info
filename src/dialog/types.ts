@@ -60,3 +60,9 @@ interface NoteResourcesResponse {
 }
 
 export type PanelMessageResponse = ItemMetadataResponse | NoteResourcesResponse | null;
+
+type OnMessageListener = (event: { message: PanelToWebViewMessage }) => void;
+export type WebviewApi = {
+	postMessage(message: WebViewToPanelMessage): Promise<PanelMessageResponse>;
+	onMessage(listener: OnMessageListener): void;
+};
