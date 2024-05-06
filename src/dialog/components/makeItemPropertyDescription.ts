@@ -1,4 +1,5 @@
 import { ModelType } from 'api/types';
+import localization from '../../localization';
 
 /** Shows and describes the value of a property of some Joplin item. */
 const makeItemPropertyDescription = (key: string, value: string | number) => {
@@ -24,6 +25,10 @@ const makeItemPropertyDescription = (key: string, value: string | number) => {
 		key === 'deleted_time'
 	) {
 		description = new Date(value).toLocaleString();
+
+		if (key === 'deleted_time' && value === 0) {
+			description = localization.notDeleted;
+		}
 	} else if (key === 'size' && typeof value === 'number') {
 		if (value > 1024 * 1024) {
 			description = `${value / 1024 / 1024} MiB`;
