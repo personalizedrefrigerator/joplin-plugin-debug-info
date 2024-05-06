@@ -1,13 +1,9 @@
 interface AppLocalization {
-	settingsPaneDescription: string;
-	noteIdForSnippets: string;
+	parentIds: string;
 }
 
 const defaultStrings: AppLocalization = {
-	settingsPaneDescription:
-		'Custom snippets for the CodeMirror 6 editor. This editor is still in beta, and may need to be enabled under the "General" tab.',
-	noteIdForSnippets:
-		'Link to note with custom snippets. This can be gotten by right-clicking on a note and clicking "copy markdown link".',
+	parentIds: 'Parent IDs',
 };
 
 const localizations: Record<string, AppLocalization> = {

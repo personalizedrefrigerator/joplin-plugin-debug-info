@@ -1,0 +1,25 @@
+#selected-note-id {
+	display: none;
+}
+
+body {
+	overflow: auto;
+	max-height: 100vh;
+}
+
+table {
+	border-spacing: 0;
+	padding: 3px;
+}
+
+table tbody > :nth-child(2n),
+table thead {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+table td,
+table th {
+	border: 1px solid var(--joplin-color);
+	margin: 0;
+	padding: 15px;
+}
