@@ -2,6 +2,7 @@ import { ModelType } from 'api/types';
 import { PanelMessageResponseType, PanelMessageType, WebviewApi } from '../types';
 import buildItemIdInput from './makeItemIdInput';
 import localization from '../../localization';
+import makeItemPropertyDescription from './makeItemPropertyDescription';
 
 declare const webviewApi: WebviewApi;
 
@@ -36,8 +37,8 @@ const makeItemTable = async (itemId: string): Promise<HTMLTableElement | Node> =
 		headerElement.appendChild(document.createTextNode(header));
 		const contentNode =
 			typeof content === 'string' ? document.createTextNode(`${content}`) : content;
-		if (linkTarget && typeof content === 'string') {
-			contentElement.appendChild(makeItemLink(contentNode, content));
+		if (linkTarget) {
+			contentElement.appendChild(makeItemLink(contentNode, linkTarget));
 		} else {
 			contentElement.appendChild(contentNode);
 		}
@@ -64,7 +65,8 @@ const makeItemTable = async (itemId: string): Promise<HTMLTableElement | Node> =
 		const value = metadata[key as keyof typeof metadata];
 		if (value === undefined) continue;
 
-		addTableRow(key, `${value}`, isLink ? `${value}` : undefined);
+		const content = makeItemPropertyDescription(key, value);
+		addTableRow(key, content, isLink ? `${value}` : undefined);
 	}
 
 	if (metadata.type_ === ModelType.Note) {
