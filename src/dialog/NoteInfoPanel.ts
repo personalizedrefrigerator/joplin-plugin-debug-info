@@ -42,7 +42,6 @@ export default class ItemInfoDialog {
 			this.panelHandle,
 			`
 				<h1>${escapeHtml(localization.noteInfoHeader)}</h1>
-				<p id='selected-note-id'>${escapeHtml((await joplin.workspace.selectedNoteIds()).join(','))}</p>
 			`,
 		);
 		await joplin.views.panels.addScript(this.panelHandle, 'dialog/webview.js');
@@ -149,6 +148,11 @@ export default class ItemInfoDialog {
 			}
 			await joplin.data.delete([pathName, message.itemId], { permanent: permanent ? '1' : false });
 			return null;
+		} else if (message.type === PanelMessageType.GetSelectedNoteIds) {
+			return {
+				type: PanelMessageResponseType.SelectedNoteIds,
+				selectedNoteIds: await joplin.workspace.selectedNoteIds(),
+			};
 		} else {
 			throw new Error(`Unknown message type, ${message}.`);
 		}

@@ -5,6 +5,7 @@ export enum PanelMessageType {
 
 	GetItemMetadataRequest = 'itemMetadata',
 	GetNoteResources = 'getResources',
+	GetSelectedNoteIds = 'getSelection',
 
 	PermanentDeleteItem = 'permanentlyDeleteItem',
 	DeleteItemToTrash = 'deleteToTrash',
@@ -27,16 +28,25 @@ interface NoteResourcesRequest {
 	noteId: string;
 }
 
+interface SelectedNoteIdsRequest {
+	type: PanelMessageType.GetSelectedNoteIds;
+}
+
 interface DeleteItemRequest {
 	type: PanelMessageType.DeleteItemToTrash | PanelMessageType.PermanentDeleteItem;
 	itemId: string;
 }
 
-export type WebViewToPanelMessage = NoteResourcesRequest | DeleteItemRequest | ItemMetadataRequest;
+export type WebViewToPanelMessage =
+	| SelectedNoteIdsRequest
+	| NoteResourcesRequest
+	| DeleteItemRequest
+	| ItemMetadataRequest;
 
 export enum PanelMessageResponseType {
 	ItemMetadata = 'itemMetadata',
 	NoteResources = 'resources',
+	SelectedNoteIds = 'selectedNoteIds',
 }
 
 export interface ItemMetadata {
@@ -59,7 +69,16 @@ interface NoteResourcesResponse {
 	resourceIds: string[];
 }
 
-export type PanelMessageResponse = ItemMetadataResponse | NoteResourcesResponse | null;
+interface SelectedNoteIdsResponse {
+	type: PanelMessageResponseType.SelectedNoteIds;
+	selectedNoteIds: string[];
+}
+
+export type PanelMessageResponse =
+	| SelectedNoteIdsResponse
+	| ItemMetadataResponse
+	| NoteResourcesResponse
+	| null;
 
 type OnMessageListener = (event: { message: PanelToWebViewMessage }) => void;
 export type WebviewApi = {

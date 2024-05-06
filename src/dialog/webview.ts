@@ -1,4 +1,4 @@
-import { PanelMessageType, WebviewApi } from './types';
+import { PanelMessageResponseType, PanelMessageType, WebviewApi } from './types';
 import makeItemTable from './components/makeItemTable';
 
 declare const webviewApi: WebviewApi;
@@ -29,9 +29,15 @@ const showTables = async (
 	outputArea.replaceChildren(...tableHtml);
 };
 
-const main = () => {
-	const initialIdsContainer = document.querySelector<HTMLElement>('#selected-note-id')!;
-	const initialIds = initialIdsContainer!.innerText.split(',');
+const main = async () => {
+	const initialIdsMessage = await webviewApi.postMessage({
+		type: PanelMessageType.GetSelectedNoteIds,
+	});
+	if (initialIdsMessage?.type !== PanelMessageResponseType.SelectedNoteIds) {
+		throw new Error(`Invalid response: ${initialIdsMessage}`);
+	}
+	const initialIds = initialIdsMessage.selectedNoteIds;
+
 	const outputArea = document.createElement('div');
 	document.body.appendChild(outputArea);
 
@@ -46,4 +52,4 @@ const main = () => {
 	});
 };
 
-main();
+void main();
