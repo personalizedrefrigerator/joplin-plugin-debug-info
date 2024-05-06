@@ -6,8 +6,8 @@
 	"name": "Joplin debug tool",
 	"description": "Adds a panel that shows additional information about the current note.",
 	"author": "Henry Heino",
-	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
-	"repository_url": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
+	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-plugin-debug-info",
+	"repository_url": "https://github.com/personalizedrefrigerator/joplin-plugin-debug-info",
 	"keywords": ["debug", "delete", "resources", "info"],
 	"categories": ["developer tools", "productivity"],
 	"platforms": ["desktop", "mobile"]
