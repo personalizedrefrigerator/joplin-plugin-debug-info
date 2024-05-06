@@ -17,10 +17,10 @@
 	"files": [
 		"publish"
 	],
-	"homepage": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
+	"homepage": "https://github.com/personalizedrefrigerator/joplin-plugin-debug-info",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets.git"
+		"url": "https://github.com/personalizedrefrigerator/joplin-plugin-debug-info.git"
 	},
 	"devDependencies": {
 		"@types/fs-extra": "^11.0.1",
