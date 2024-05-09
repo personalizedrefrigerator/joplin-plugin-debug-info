@@ -10,6 +10,7 @@ import {
 import { ModelType } from 'api/types';
 import escapeHtml from '../util/escapeHtml';
 import localization from '../localization';
+import isVersionGreater from '../util/isVersionGreater';
 
 // Returns the base path name for Joplin API queries.
 const pathNameForItem = (itemType: ModelType) => {
@@ -58,6 +59,11 @@ const fieldsForItemType = (itemType: ModelType) => {
 		);
 	}
 	return fields;
+};
+
+const canMoveItemToTrash = async (itemType: ModelType) => {
+	const versionSupportsTrash = isVersionGreater((await joplin.versionInfo()).version, '3.0.0');
+	return versionSupportsTrash && (itemType === ModelType.Note || itemType === ModelType.Folder);
 };
 
 export default class ItemInfoDialog {
@@ -147,11 +153,12 @@ export default class ItemInfoDialog {
 			if (!pathName) throw new Error(`Unable to delete item with type ${type}`);
 
 			const permanent = message.type === PanelMessageType.PermanentDeleteItem;
-			if (type !== ModelType.Note && type !== ModelType.Folder && !permanent) {
+			if (!permanent && !(await canMoveItemToTrash(type))) {
 				throw new Error(
 					`Refusing to permanently delete an item of type ${type}, when to-trash was requested.`,
 				);
 			}
+
 			await joplin.data.delete([pathName, message.itemId], { permanent: permanent ? '1' : false });
 			return null;
 		} else if (message.type === PanelMessageType.OpenInJoplin) {

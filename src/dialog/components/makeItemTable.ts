@@ -132,7 +132,10 @@ const makeItemTable = async (
 		);
 
 		// Resources can't be deleted to trash
-		if (metadata.type_ === ModelType.Folder || metadata.type_ === ModelType.Note) {
+		if (
+			(metadata.type_ === ModelType.Folder || metadata.type_ === ModelType.Note) &&
+			metadata.deleted_time === 0
+		) {
 			addActionButton(
 				localization.deleteToTrash,
 				async () => {
