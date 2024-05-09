@@ -187,9 +187,14 @@ export default class ItemInfoDialog {
 				throw new Error(`Unknown model type for search: ${query.searchIn}.`);
 			}
 
+			const includeDeleted = loadFields.includes('deleted_time');
+			const includeConflicts = loadFields.includes('is_conflict');
+
 			while (lastResponse.has_more && page < maxCheckedPage) {
 				lastResponse = await joplin.data.get([searchIn], {
 					fields: loadFields,
+					include_deleted: includeDeleted ? 1 : 0,
+					include_conflicts: includeConflicts ? 1 : 0,
 					page,
 				});
 
