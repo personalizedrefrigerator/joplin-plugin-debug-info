@@ -4,12 +4,13 @@ This plugin adds a panel that shows information about the selected notes(s). At 
 
 ![screenshot: Shows a panel with note properties including deleted_time, updated_time, and actions including delete](https://github.com/personalizedrefrigerator/joplin-plugin-debug-info/assets/46334387/98ef3280-b8d2-44a4-b8d3-99b061252fab)
 
+This plugin supports both Joplin Desktop >= 2.14 and Joplin Mobile >= 3.0.
 
 # Features
 
 ## Note info panel
 
-This plugin adds a "note info" panel to Joplin's UI. The panel can be hidden by going to View > Show/Hide note info. 
+This plugin adds a "note info" panel to Joplin's UI. The panel can be hidden with the "View" > "Show/Hide note info" menu item.
 
 The fields shown in the plugin are a subset of the fields [stored for different items in Joplin's database](https://github.com/laurent22/joplin/blob/dev/packages/lib/services/database/types.ts).
 
