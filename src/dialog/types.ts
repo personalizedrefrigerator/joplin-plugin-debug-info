@@ -11,6 +11,7 @@ export enum PanelMessageType {
 	DeleteItemToTrash = 'deleteToTrash',
 
 	OpenInJoplin = 'openInJoplin',
+	GetAllMatchingRegex = 'allMatchingRegex',
 }
 
 interface NoteSelectionChangeMessage {
@@ -49,16 +50,30 @@ interface OpenItemRequest {
 	itemId: string;
 }
 
+export type SearchQuery = {
+	regex: string;
+	searchIn: ModelType;
+	fields: string[];
+};
+
+interface RegexSearchRequest {
+	type: PanelMessageType.GetAllMatchingRegex;
+	query: SearchQuery;
+	page: number;
+}
+
 export type WebViewToPanelMessage =
 	| SelectedNoteIdsRequest
 	| NoteResourcesRequest
 	| DeleteItemRequest
 	| OpenItemRequest
+	| RegexSearchRequest
 	| ItemMetadataRequest;
 
 export enum PanelMessageResponseType {
 	ItemMetadata = 'itemMetadata',
 	NoteResources = 'resources',
+	SearchResults = 'searchResults',
 	SelectedNoteIds = 'selectedNoteIds',
 }
 
@@ -82,6 +97,15 @@ interface NoteResourcesResponse {
 	resourceIds: string[];
 }
 
+export type SearchResult = { id: string; title: string; inFields: string[] };
+
+interface RegexSearchResponse {
+	type: PanelMessageResponseType.SearchResults;
+	results: SearchResult[];
+	nextPage: number;
+	has_more: boolean;
+}
+
 interface SelectedNoteIdsResponse {
 	type: PanelMessageResponseType.SelectedNoteIds;
 	selectedNoteIds: string[];
@@ -90,6 +114,7 @@ interface SelectedNoteIdsResponse {
 export type PanelMessageResponse =
 	| SelectedNoteIdsResponse
 	| ItemMetadataResponse
+	| RegexSearchResponse
 	| NoteResourcesResponse
 	| null;
 

@@ -45,3 +45,39 @@ table th {
 .item-id-input-container label {
 	opacity: 0.9;
 }
+
+.more-tools-container {
+	margin-top: 20px;
+	border-top: 1px solid var(--joplin-color3);
+}
+
+.error-message {
+	color: var(--joplin-color-error);
+	background-color: var(--joplin-warning-background-color);
+	font-family: monospace;
+
+	font-weight: bold;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+details > summary {
+	cursor: pointer;
+}
+
+details[open] {
+	margin: 2px;
+	padding: 5px;
+
+	border-radius: 2px;
+	border: 1px solid var(--joplin-color2);
+	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.search-query-builder {
+	margin-bottom: 3px;
+}
+
+.search-query-builder > .advanced {
+	opacity: 0.9;
+}

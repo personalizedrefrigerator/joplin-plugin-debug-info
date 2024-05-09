@@ -4,6 +4,7 @@ import {
 	PanelMessageResponseType,
 	PanelMessageType,
 	PanelToWebViewMessage,
+	SearchResult,
 	WebViewToPanelMessage,
 } from './types';
 import { ModelType } from 'api/types';
@@ -22,6 +23,41 @@ const pathNameForItem = (itemType: ModelType) => {
 		return 'tags';
 	}
 	return null;
+};
+
+const fieldsForItemType = (itemType: ModelType) => {
+	let fields = ['id', 'encryption_applied', 'is_shared', 'updated_time', 'created_time'];
+	if (itemType === ModelType.Note || itemType === ModelType.Folder) {
+		fields.push('parent_id', 'title', 'deleted_time');
+
+		if (itemType === ModelType.Note) {
+			fields.push(
+				'author',
+				'altitude',
+				'latitude',
+				'longitude',
+				'markup_language',
+				'todo_completed',
+				'todo_due',
+				'source_application',
+				'source_url',
+				'is_conflict',
+				'user_created_time',
+				'user_updated_time',
+			);
+		}
+	} else if (itemType === ModelType.Resource) {
+		fields.push(
+			'size',
+			'filename',
+			'file_extension',
+			'ocr_text',
+			'ocr_status',
+			'ocr_error',
+			'mime',
+		);
+	}
+	return fields;
 };
 
 export default class ItemInfoDialog {
@@ -64,37 +100,7 @@ export default class ItemInfoDialog {
 	): Promise<PanelMessageResponse> => {
 		if (message.type === PanelMessageType.GetItemMetadataRequest) {
 			const type = await joplin.data.itemType(message.itemId);
-			let fields = ['id', 'encryption_applied', 'is_shared', 'updated_time', 'created_time'];
-			if (type === ModelType.Note || type === ModelType.Folder) {
-				fields.push('parent_id', 'title', 'deleted_time');
-
-				if (type === ModelType.Note) {
-					fields.push(
-						'author',
-						'altitude',
-						'latitude',
-						'longitude',
-						'markup_language',
-						'todo_completed',
-						'todo_due',
-						'source_application',
-						'source_url',
-						'is_conflict',
-						'user_created_time',
-						'user_updated_time',
-					);
-				}
-			} else if (type === ModelType.Resource) {
-				fields.push(
-					'size',
-					'filename',
-					'file_extension',
-					'ocr_text',
-					'ocr_status',
-					'ocr_error',
-					'mime',
-				);
-			}
+			const fields = fieldsForItemType(type);
 
 			const pathName = pathNameForItem(type);
 			if (!pathName) {
@@ -151,6 +157,72 @@ export default class ItemInfoDialog {
 		} else if (message.type === PanelMessageType.OpenInJoplin) {
 			await joplin.commands.execute('openItem', `:/${message.itemId}`);
 			return null;
+		} else if (message.type === PanelMessageType.GetAllMatchingRegex) {
+			let page = message.page;
+			const results: SearchResult[] = [];
+
+			const query = message.query;
+			const regex = new RegExp(query.regex, 'u');
+
+			let lastResponse = { has_more: true, items: [] as any[] };
+
+			// Don't check more than just a few pages at once -- this allows progress
+			// to be shown.
+			const maxCheckedPage = message.page + 3;
+
+			const searchFields = query.fields;
+			const fieldValidityRegex = /^[a-zA-Z0-9_-]+$/;
+			if (searchFields.some((field) => !field.match(fieldValidityRegex))) {
+				throw new Error(`All fields should match ${/^[a-zA-Z0-9_-]+$/}`);
+			}
+
+			// The ID and title fields are needed to create results, even if we're not searching with them.
+			let loadFields = searchFields;
+			if (!loadFields.includes('id')) {
+				loadFields = [...loadFields, 'id', 'title'];
+			}
+
+			const searchIn = pathNameForItem(query.searchIn);
+			if (!searchIn) {
+				throw new Error(`Unknown model type for search: ${query.searchIn}.`);
+			}
+
+			while (lastResponse.has_more && page < maxCheckedPage) {
+				lastResponse = await joplin.data.get([searchIn], {
+					fields: loadFields,
+					page,
+				});
+
+				for (const item of lastResponse.items) {
+					const inFields = [];
+
+					for (const field of searchFields) {
+						const hasField = Object.prototype.hasOwnProperty.call(item, field);
+						if (hasField && `${item[field]}`.match(regex)) {
+							inFields.push(field);
+						}
+					}
+
+					if (inFields.length > 0) {
+						results.push({
+							id: item.id,
+							// Trim the title for better display (handles the case where a
+							// note has a very long title.)
+							title: (item.title ?? item.id).substring(0, 128),
+							inFields,
+						});
+					}
+				}
+
+				page++;
+			}
+
+			return {
+				type: PanelMessageResponseType.SearchResults,
+				results,
+				nextPage: page,
+				has_more: lastResponse.has_more,
+			};
 		} else if (message.type === PanelMessageType.GetSelectedNoteIds) {
 			return {
 				type: PanelMessageResponseType.SelectedNoteIds,

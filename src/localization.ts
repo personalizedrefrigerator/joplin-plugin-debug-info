@@ -6,6 +6,12 @@ interface AppLocalization {
 	toggleNoteInfo: string;
 	noteInfoHeader: string;
 	notDeleted: string;
+
+	moreTools: string;
+	moreTools__search: string;
+	loadMore: string;
+	advanced: string;
+
 	continueDangerousAction: (actionName: string, itemTitle: string) => string;
 }
 
@@ -17,6 +23,12 @@ const defaultStrings: AppLocalization = {
 	toggleNoteInfo: 'Show/hide note info',
 	noteInfoHeader: 'Note info plugin',
 	notDeleted: 'Not deleted',
+
+	moreTools: 'More tools: ',
+	moreTools__search: 'Search',
+	loadMore: 'Load more',
+	advanced: 'Advanced',
+
 	continueDangerousAction: (actionName, itemTitle) =>
 		`${actionName} ${itemTitle}.\nContiue? This may lead to data loss.`,
 };

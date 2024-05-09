@@ -1,5 +1,6 @@
 import { PanelMessageResponseType, PanelMessageType, WebviewApi } from './types';
 import makeItemTable from './components/makeItemTable';
+import makeMoreToolsList from './components/more-tools/makeMoreToolsList';
 
 declare const webviewApi: WebviewApi;
 
@@ -40,6 +41,8 @@ const main = async () => {
 
 	const outputArea = document.createElement('div');
 	document.body.appendChild(outputArea);
+
+	document.body.appendChild(makeMoreToolsList());
 
 	const reloadCounter = { value: 0 };
 	void showTables(initialIds, outputArea, reloadCounter);
