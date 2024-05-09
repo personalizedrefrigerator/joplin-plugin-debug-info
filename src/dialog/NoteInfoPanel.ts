@@ -112,8 +112,8 @@ export default class ItemInfoDialog {
 
 			const data = await joplin.data.get([pathName, message.itemId], {
 				fields,
-				include_deleted: 1,
-				include_conflicts: 1,
+				include_deleted: '1',
+				include_conflicts: '1',
 			});
 
 			return {
@@ -179,7 +179,10 @@ export default class ItemInfoDialog {
 			// The ID and title fields are needed to create results, even if we're not searching with them.
 			let loadFields = searchFields;
 			if (!loadFields.includes('id')) {
-				loadFields = [...loadFields, 'id', 'title'];
+				loadFields = [...loadFields, 'id'];
+			}
+			if (!loadFields.includes('title')) {
+				loadFields = [...loadFields, 'title'];
 			}
 
 			const searchIn = pathNameForItem(query.searchIn);
@@ -193,8 +196,8 @@ export default class ItemInfoDialog {
 			while (lastResponse.has_more && page < maxCheckedPage) {
 				lastResponse = await joplin.data.get([searchIn], {
 					fields: loadFields,
-					include_deleted: includeDeleted ? 1 : 0,
-					include_conflicts: includeConflicts ? 1 : 0,
+					include_deleted: includeDeleted ? '1' : 0,
+					include_conflicts: includeConflicts ? '1' : 0,
 					page,
 				});
 
