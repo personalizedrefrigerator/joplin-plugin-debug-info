@@ -148,13 +148,17 @@ export default class ItemInfoDialog {
 			}
 			await joplin.data.delete([pathName, message.itemId], { permanent: permanent ? '1' : false });
 			return null;
+		} else if (message.type === PanelMessageType.OpenInJoplin) {
+			await joplin.commands.execute('openItem', `:/${message.itemId}`);
+			return null;
 		} else if (message.type === PanelMessageType.GetSelectedNoteIds) {
 			return {
 				type: PanelMessageResponseType.SelectedNoteIds,
 				selectedNoteIds: await joplin.workspace.selectedNoteIds(),
 			};
 		} else {
-			throw new Error(`Unknown message type, ${message}.`);
+			const exhaustivenessCheck: never = message;
+			throw new Error(`Unknown message type, ${exhaustivenessCheck}.`);
 		}
 	};
 

@@ -4,7 +4,7 @@ import makeItemTable from './components/makeItemTable';
 declare const webviewApi: WebviewApi;
 
 const showTables = async (
-	itemIds: string[],
+	selectedNoteIds: string[],
 	outputArea: HTMLElement,
 	cancelCounter: { value: number },
 ) => {
@@ -13,8 +13,8 @@ const showTables = async (
 	const tableHtml: Node[] = [];
 
 	let counter = 0;
-	for (const id of itemIds) {
-		tableHtml.push(await makeItemTable(id));
+	for (const id of selectedNoteIds) {
+		tableHtml.push(await makeItemTable(id, selectedNoteIds));
 		if (cancelCounter.value !== initialCancelValue) {
 			return;
 		}

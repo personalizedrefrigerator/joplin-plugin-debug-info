@@ -9,6 +9,8 @@ export enum PanelMessageType {
 
 	PermanentDeleteItem = 'permanentlyDeleteItem',
 	DeleteItemToTrash = 'deleteToTrash',
+
+	OpenInJoplin = 'openInJoplin',
 }
 
 interface NoteSelectionChangeMessage {
@@ -32,8 +34,18 @@ interface SelectedNoteIdsRequest {
 	type: PanelMessageType.GetSelectedNoteIds;
 }
 
-interface DeleteItemRequest {
-	type: PanelMessageType.DeleteItemToTrash | PanelMessageType.PermanentDeleteItem;
+type DeleteItemRequest =
+	| {
+			type: PanelMessageType.DeleteItemToTrash;
+			itemId: string;
+	  }
+	| {
+			type: PanelMessageType.PermanentDeleteItem;
+			itemId: string;
+	  };
+
+interface OpenItemRequest {
+	type: PanelMessageType.OpenInJoplin;
 	itemId: string;
 }
 
@@ -41,6 +53,7 @@ export type WebViewToPanelMessage =
 	| SelectedNoteIdsRequest
 	| NoteResourcesRequest
 	| DeleteItemRequest
+	| OpenItemRequest
 	| ItemMetadataRequest;
 
 export enum PanelMessageResponseType {

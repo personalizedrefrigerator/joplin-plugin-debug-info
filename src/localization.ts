@@ -1,6 +1,7 @@
 interface AppLocalization {
 	permanentlyDelete: string;
 	deleteToTrash: string;
+	showInNoteViewer: string;
 	go: string;
 	toggleNoteInfo: string;
 	noteInfoHeader: string;
@@ -11,6 +12,7 @@ interface AppLocalization {
 const defaultStrings: AppLocalization = {
 	permanentlyDelete: 'Permanently delete',
 	deleteToTrash: 'Delete to trash',
+	showInNoteViewer: 'Show in editor/viewer',
 	go: 'Go',
 	toggleNoteInfo: 'Show/hide note info',
 	noteInfoHeader: 'Note info plugin',

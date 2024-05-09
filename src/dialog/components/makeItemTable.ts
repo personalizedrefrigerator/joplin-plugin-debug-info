@@ -7,7 +7,10 @@ import makeItemPropertyDescription from './makeItemPropertyDescription';
 declare const webviewApi: WebviewApi;
 
 /** Creates a table with information and actions related to an item. */
-const makeItemTable = async (itemId: string): Promise<HTMLTableElement | Node> => {
+const makeItemTable = async (
+	itemId: string,
+	selectedNoteIds?: string[],
+): Promise<HTMLTableElement | Node> => {
 	const table = document.createElement('table');
 
 	const goToItem = async (itemId: string) => {
@@ -137,6 +140,17 @@ const makeItemTable = async (itemId: string): Promise<HTMLTableElement | Node> =
 					await goToItem(itemId);
 				},
 				true,
+			);
+		}
+
+		const isCurrentlySelectedNote = selectedNoteIds?.length === 1 && selectedNoteIds[0] === itemId;
+		if (metadata.type_ === ModelType.Note && !isCurrentlySelectedNote) {
+			addActionButton(
+				localization.showInNoteViewer,
+				async () => {
+					await webviewApi.postMessage({ type: PanelMessageType.OpenInJoplin, itemId });
+				},
+				false,
 			);
 		}
 	}
