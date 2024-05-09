@@ -35,3 +35,7 @@ A search scans Joplin's database and results are in the order returned by Joplin
     - Search field content: `image/svg`
     - Advanced settings: `Resources` and fields: `mime` (for [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)).
 
+- **All notes with nonbreaking spaces**:
+    - <img alt="screenshot" width="400" src="https://github.com/personalizedrefrigerator/joplin-plugin-debug-info/assets/46334387/45b18601-5df1-49a5-b58b-80c1218bde1d"/>
+    - Search field content: `\u00A0`
+    - Advanced settings: `Notes` and fields: `body`.
