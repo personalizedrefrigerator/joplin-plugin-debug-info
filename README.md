@@ -40,3 +40,9 @@ A search scans Joplin's database and results are in the order returned by Joplin
     - <img alt="screenshot" width="400" src="https://github.com/personalizedrefrigerator/joplin-plugin-debug-info/assets/46334387/45b18601-5df1-49a5-b58b-80c1218bde1d"/>
     - Search field content: `\u00A0`
     - Advanced settings: `Notes` and fields: `body`.
+
+- **Shared notes**:
+    - <img alt="screenshot" width="400" src="https://github.com/personalizedrefrigerator/joplin-plugin-debug-info/assets/46334387/a58c694c-0f57-46c6-b4f9-d949df36391c"/>
+    - Search field content: `1`
+    - Advanced settings: `Notes` and fields: `is_shared`.
+
