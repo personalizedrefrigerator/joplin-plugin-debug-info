@@ -41,8 +41,14 @@ A search scans Joplin's database and results are in the order returned by Joplin
     - Search field content: `\u00A0`
     - Advanced settings: `Notes` and fields: `body`.
 
-- **Shared notes**:
+- **Shared and/or published notes**:
     - <img alt="screenshot" width="400" src="https://github.com/personalizedrefrigerator/joplin-plugin-debug-info/assets/46334387/a58c694c-0f57-46c6-b4f9-d949df36391c"/>
     - Search field content: `1`
     - Advanced settings: `Notes` and fields: `is_shared`.
+
+- **Notes from Joplin's webclipper**:
+    - <img alt="screenshot" width="400" src="https://github.com/personalizedrefrigerator/joplin-plugin-debug-info/assets/46334387/3a5829f8-aeb6-48ed-961a-a167c0170532"/>
+    - Search field content: `.`
+    - Advanced settings: `Notes` and fields: `source_url`.
+    - **Explanation**: Because a `.` means "any character", this query searches for all notes with a non-empty `source_url`. The Joplin webclipper associates a `source_url` with webclipped notes.
 
