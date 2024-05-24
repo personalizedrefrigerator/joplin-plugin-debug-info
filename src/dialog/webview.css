@@ -10,6 +10,18 @@ body {
 	scrollbar-width: thin;
 }
 
+*::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+	background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	/* Select a color that should be visible against the panel background, but not too bright. */
+	background-color: color-mix(in srgb, var(--joplin-color) 50%, rgba(100, 100, 100, 0.3));
+	border-radius: 4px;
+}
+
 table {
 	border-spacing: 0;
 	padding: 3px;
