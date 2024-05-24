@@ -6,6 +6,9 @@ body {
 	overflow: auto;
 	max-height: 100vh;
 
+	padding-left: 4px;
+	padding-right: 4px;
+
 	scrollbar-color: var(--joplin-color3) var(--joplin-background-color3);
 	scrollbar-width: thin;
 }
@@ -25,6 +28,8 @@ body {
 table {
 	border-spacing: 0;
 	padding: 3px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 table tbody > :nth-child(2n),

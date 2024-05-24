@@ -83,7 +83,7 @@ export default class ItemInfoDialog {
 		await joplin.views.panels.setHtml(
 			this.panelHandle,
 			`
-				<h1>${escapeHtml(localization.noteInfoHeader)}</h1>
+				<h1 class='panel-header'>${escapeHtml(localization.noteInfoHeader)}</h1>
 			`,
 		);
 		await joplin.views.panels.addScript(this.panelHandle, 'dialog/webview.js');
