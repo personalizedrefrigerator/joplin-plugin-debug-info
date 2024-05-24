@@ -1,3 +1,8 @@
+# 0.1.0
+
+- Style changes.
+- Allow viewing all notes associated with a resource.
+
 # 0.0.4
 
 - Fix inability to search in `is_conflict` or `deleted_time` fields.
