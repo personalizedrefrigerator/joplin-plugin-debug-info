@@ -6,6 +6,7 @@ interface AppLocalization {
 	toggleNoteInfo: string;
 	noteInfoHeader: string;
 	notDeleted: string;
+	linkedNotesMayBeOutdated: string;
 
 	moreTools: string;
 	moreTools__search: string;
@@ -23,6 +24,8 @@ const defaultStrings: AppLocalization = {
 	toggleNoteInfo: 'Show/hide note info',
 	noteInfoHeader: 'Note info plugin',
 	notDeleted: 'Not deleted',
+	linkedNotesMayBeOutdated:
+		"Linked notes.\nNote: Joplin doesn't update this frequently. Restarting Joplin and waiting 30 seconds should force this to update.",
 
 	moreTools: 'More tools: ',
 	moreTools__search: 'Search',

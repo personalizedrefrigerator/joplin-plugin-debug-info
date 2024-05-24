@@ -129,7 +129,7 @@ export default class ItemInfoDialog {
 					...data,
 				},
 			};
-		} else if (message.type === PanelMessageType.GetNoteResources) {
+		} else if (message.type === PanelMessageType.GetResourcesLinkedToNote) {
 			let data;
 			let page = 0;
 
@@ -141,8 +141,23 @@ export default class ItemInfoDialog {
 			} while (data.has_more);
 
 			return {
-				type: PanelMessageResponseType.NoteResources,
-				resourceIds: itemIds,
+				type: PanelMessageResponseType.IdListResponse,
+				ids: itemIds,
+			};
+		} else if (message.type === PanelMessageType.GetNotesLinkedToResource) {
+			let data;
+			let page = 0;
+
+			const itemIds: string[] = [];
+			do {
+				data = await joplin.data.get(['resources', message.resourceId, 'notes'], { page });
+				page++;
+				itemIds.push(...data.items.map((i: any) => i.id));
+			} while (data.has_more);
+
+			return {
+				type: PanelMessageResponseType.IdListResponse,
+				ids: itemIds,
 			};
 		} else if (
 			message.type === PanelMessageType.PermanentDeleteItem ||

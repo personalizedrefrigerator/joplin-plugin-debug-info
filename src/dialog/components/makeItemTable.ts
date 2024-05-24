@@ -1,5 +1,10 @@
 import { ModelType } from 'api/types';
-import { PanelMessageResponseType, PanelMessageType, WebviewApi } from '../types';
+import {
+	PanelMessageResponseType,
+	PanelMessageType,
+	WebViewToPanelMessage,
+	WebviewApi,
+} from '../types';
 import buildItemIdInput from './makeItemIdInput';
 import localization from '../../localization';
 import makeItemPropertyDescription from './makeItemPropertyDescription';
@@ -59,7 +64,7 @@ const makeItemTable = async (
 		return document.createTextNode(`No content found: ${itemId}`);
 	}
 	if (noteInfo?.type !== PanelMessageResponseType.ItemMetadata) {
-		throw new Error('Invalid response: ' + noteInfo);
+		throw new Error('Invalid metadata response: ' + noteInfo);
 	}
 
 	const metadata = noteInfo.metadata;
@@ -72,29 +77,48 @@ const makeItemTable = async (
 		addTableRow(key, content, isLink ? `${value}` : undefined);
 	}
 
-	if (metadata.type_ === ModelType.Note) {
+	// A button that sends a request for an ID list when clicked.
+	const makeItemListButton = (requestMessage: WebViewToPanelMessage, linkHeader = '') => {
 		const showButton = document.createElement('button');
 		showButton.onclick = async () => {
 			showButton.disabled = true;
 
-			const resources = await webviewApi.postMessage({
-				type: PanelMessageType.GetNoteResources,
-				noteId: itemId,
-			});
-			if (resources?.type !== PanelMessageResponseType.NoteResources) {
-				throw new Error(`Invalid response ${resources}`);
+			const resources = await webviewApi.postMessage(requestMessage);
+			if (resources?.type !== PanelMessageResponseType.IdListResponse) {
+				throw new Error(`Invalid item list response ${resources}`);
 			}
 
 			const linkContainer = document.createElement('ul');
-			for (const id of resources.resourceIds) {
+			for (const id of resources.ids) {
 				const element = document.createElement('li');
 				element.appendChild(makeItemLink(id, id));
 				linkContainer.appendChild(element);
 			}
-			showButton.replaceWith(linkContainer);
+			showButton.replaceWith(document.createTextNode(linkHeader), linkContainer);
 		};
 		showButton.innerText = '...';
-		addTableRow('resources', showButton);
+		return showButton;
+	};
+
+	if (metadata.type_ === ModelType.Note) {
+		addTableRow(
+			'resources',
+			makeItemListButton({
+				type: PanelMessageType.GetResourcesLinkedToNote,
+				noteId: itemId,
+			}),
+		);
+	} else if (metadata.type_ === ModelType.Resource) {
+		addTableRow(
+			'notes',
+			makeItemListButton(
+				{
+					type: PanelMessageType.GetNotesLinkedToResource,
+					resourceId: itemId,
+				},
+				localization.linkedNotesMayBeOutdated,
+			),
+		);
 	}
 
 	const actionButtonContainer: HTMLElement = document.createElement('div');

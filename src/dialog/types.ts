@@ -4,7 +4,8 @@ export enum PanelMessageType {
 	NoteSelectionChange = 'noteChange',
 
 	GetItemMetadataRequest = 'itemMetadata',
-	GetNoteResources = 'getResources',
+	GetResourcesLinkedToNote = 'getResources',
+	GetNotesLinkedToResource = 'getNotes',
 	GetSelectedNoteIds = 'getSelection',
 
 	PermanentDeleteItem = 'permanentlyDeleteItem',
@@ -27,8 +28,13 @@ interface ItemMetadataRequest {
 }
 
 interface NoteResourcesRequest {
-	type: PanelMessageType.GetNoteResources;
+	type: PanelMessageType.GetResourcesLinkedToNote;
 	noteId: string;
+}
+
+interface NotesLinkedToResourceRequest {
+	type: PanelMessageType.GetNotesLinkedToResource;
+	resourceId: string;
 }
 
 interface SelectedNoteIdsRequest {
@@ -65,6 +71,7 @@ interface RegexSearchRequest {
 export type WebViewToPanelMessage =
 	| SelectedNoteIdsRequest
 	| NoteResourcesRequest
+	| NotesLinkedToResourceRequest
 	| DeleteItemRequest
 	| OpenItemRequest
 	| RegexSearchRequest
@@ -72,7 +79,7 @@ export type WebViewToPanelMessage =
 
 export enum PanelMessageResponseType {
 	ItemMetadata = 'itemMetadata',
-	NoteResources = 'resources',
+	IdListResponse = 'resources',
 	SearchResults = 'searchResults',
 	SelectedNoteIds = 'selectedNoteIds',
 }
@@ -93,8 +100,8 @@ interface ItemMetadataResponse {
 }
 
 interface NoteResourcesResponse {
-	type: PanelMessageResponseType.NoteResources;
-	resourceIds: string[];
+	type: PanelMessageResponseType.IdListResponse;
+	ids: string[];
 }
 
 export type SearchResult = { id: string; title: string; inFields: string[] };
