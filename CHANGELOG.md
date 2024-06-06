@@ -1,3 +1,9 @@
+# 0.2.0
+
+- Show `blob_updated_time`, `encryption_blob_encrypted`, and `title` resource properties.
+- Show `conflict_original_id` on notes.
+- Adds a refresh button.
+
 # 0.1.0
 
 - Style changes.
