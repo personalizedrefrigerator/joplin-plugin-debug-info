@@ -69,7 +69,7 @@ const makeItemTable = async (
 
 	const metadata = noteInfo.metadata;
 	for (const key in metadata) {
-		const isLink = ['parent_id'].includes(key);
+		const isLink = ['parent_id', 'conflict_original_id'].includes(key);
 		const value = metadata[key as keyof typeof metadata];
 		if (value === undefined) continue;
 
