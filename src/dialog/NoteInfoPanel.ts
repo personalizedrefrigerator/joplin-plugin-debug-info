@@ -43,15 +43,19 @@ const fieldsForItemType = (itemType: ModelType) => {
 				'source_application',
 				'source_url',
 				'is_conflict',
+				'conflict_original_id',
 				'user_created_time',
 				'user_updated_time',
 			);
 		}
 	} else if (itemType === ModelType.Resource) {
 		fields.push(
+			'blob_updated_time',
 			'size',
+			'title',
 			'filename',
 			'file_extension',
+			'encryption_blob_encrypted',
 			'ocr_text',
 			'ocr_status',
 			'ocr_error',

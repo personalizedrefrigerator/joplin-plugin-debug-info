@@ -22,6 +22,7 @@ const makeItemPropertyDescription = (key: string, value: string | number) => {
 		key === 'updated_time' ||
 		key === 'user_created_time' ||
 		key === 'user_updated_time' ||
+		key === 'blob_updated_time' ||
 		key === 'deleted_time'
 	) {
 		description = new Date(value).toLocaleString();
