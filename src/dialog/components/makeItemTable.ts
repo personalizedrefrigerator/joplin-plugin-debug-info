@@ -8,6 +8,7 @@ import {
 import buildItemIdInput from './makeItemIdInput';
 import localization from '../../localization';
 import makeItemPropertyDescription from './makeItemPropertyDescription';
+import makeRefreshButton from './makeRefreshButton';
 
 declare const webviewApi: WebviewApi;
 
@@ -17,9 +18,14 @@ const makeItemTable = async (
 	selectedNoteIds?: string[],
 ): Promise<HTMLTableElement | Node> => {
 	const table = document.createElement('table');
+	table.classList.add('item-table');
 
 	const goToItem = async (itemId: string) => {
 		table.replaceWith(await makeItemTable(itemId));
+	};
+
+	const refresh = async () => {
+		await goToItem(itemId);
 	};
 
 	const makeItemLink = (content: Node | string, targetId: string) => {
@@ -41,6 +47,7 @@ const makeItemTable = async (
 		const tableRow = document.createElement('tr');
 		const headerElement = document.createElement('th');
 		const contentElement = document.createElement('td');
+		contentElement.classList.add('item-table-property-value');
 
 		headerElement.appendChild(document.createTextNode(header));
 		const contentNode =
@@ -188,6 +195,8 @@ const makeItemTable = async (
 	const tbody = document.createElement('tbody');
 
 	const headContent = document.createElement('th');
+	headContent.classList.add('item-table-header');
+	headContent.appendChild(makeRefreshButton(refresh));
 	headContent.appendChild(buildItemIdInput(metadata.id, goToItem));
 	headContent.colSpan = 2;
 

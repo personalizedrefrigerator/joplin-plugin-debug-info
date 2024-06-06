@@ -3,6 +3,7 @@ interface AppLocalization {
 	deleteToTrash: string;
 	showInNoteViewer: string;
 	go: string;
+	refresh: string;
 	toggleNoteInfo: string;
 	noteInfoHeader: string;
 	notDeleted: string;
@@ -21,6 +22,7 @@ const defaultStrings: AppLocalization = {
 	deleteToTrash: 'Delete to trash',
 	showInNoteViewer: 'Show in editor/viewer',
 	go: 'Go',
+	refresh: 'Refresh',
 	toggleNoteInfo: 'Show/hide note info',
 	noteInfoHeader: 'Note info plugin',
 	notDeleted: 'Not deleted',
