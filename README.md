@@ -14,6 +14,16 @@ This plugin adds a "note info" panel to Joplin's UI. The panel can be hidden wit
 
 The fields shown in the plugin are a subset of the fields [stored for different items in Joplin's database](https://github.com/laurent22/joplin/blob/dev/packages/lib/services/database/types.ts).
 
+### Showing information for a specific note, notebook, or resource
+
+To show the information for a specific note or resource ID, click on the text box to the right of the ID header:
+![screenshot: Box to the right of "ID" in the table header is circled](https://github.com/personalizedrefrigerator/joplin-plugin-debug-info/assets/46334387/f877d10d-a280-4b39-ac96-b662fa97f3b4)
+
+Next, paste a new ID (or note link) into the ID box. Finally, click "GO":
+
+<img src="https://github.com/personalizedrefrigerator/joplin-plugin-debug-info/assets/46334387/118a7bfc-ea9c-486a-8142-6ec53b9da555" width="340"/>
+
+
 ## Regular expression search
 
 At the bottom of the info panel is a "search" dropdown:
