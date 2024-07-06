@@ -6,8 +6,13 @@ interface AppLocalization {
 	refresh: string;
 	toggleNoteInfo: string;
 	noteInfoHeader: string;
-	notDeleted: string;
+	propertyDescription__notDeleted: string;
 	linkedNotesMayBeOutdated: string;
+	propertyDescription__decryptedLocally: string;
+	propertyDescription__encryptedLocally: string;
+	propertyDescription__notDue: string;
+	propertyDescription__notAConflict: string;
+	propertyDescription__isAConflict: string;
 
 	moreTools: string;
 	moreTools__search: string;
@@ -25,7 +30,7 @@ const defaultStrings: AppLocalization = {
 	refresh: 'Refresh',
 	toggleNoteInfo: 'Show/hide note info',
 	noteInfoHeader: 'Note info plugin',
-	notDeleted: 'Not deleted',
+	propertyDescription__notDeleted: 'Not deleted',
 	linkedNotesMayBeOutdated:
 		"Linked notes.\nNote: Joplin doesn't update this frequently. Restarting Joplin and waiting 30 seconds should force this to update.",
 
@@ -33,6 +38,12 @@ const defaultStrings: AppLocalization = {
 	moreTools__search: 'Search',
 	loadMore: 'Load more',
 	advanced: 'Advanced',
+
+	propertyDescription__encryptedLocally: 'Not yet decrypted',
+	propertyDescription__decryptedLocally: 'Decrypted locally',
+	propertyDescription__notDue: 'Not due',
+	propertyDescription__notAConflict: 'Not a conflict',
+	propertyDescription__isAConflict: 'Is a conflict',
 
 	continueDangerousAction: (actionName, itemTitle) =>
 		`${actionName} ${itemTitle}.\nContiue? This may lead to data loss.`,
