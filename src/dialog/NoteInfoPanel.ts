@@ -148,13 +148,22 @@ export default class ItemInfoDialog {
 				type: PanelMessageResponseType.IdListResponse,
 				ids: itemIds,
 			};
-		} else if (message.type === PanelMessageType.GetNotesLinkedToResource) {
+		} else if (message.type === PanelMessageType.GetAssociatedNotes) {
 			let data;
 			let page = 0;
 
+			let parentType = '';
+			if (message.fromItemType === ModelType.Resource) {
+				parentType = 'resources';
+			} else if (message.fromItemType === ModelType.Folder) {
+				parentType = 'folders';
+			} else if (message.fromItemType === ModelType.Tag) {
+				throw new Error(`Unsupported fromItemType: ${message.fromItemType}`);
+			}
+
 			const itemIds: string[] = [];
 			do {
-				data = await joplin.data.get(['resources', message.resourceId, 'notes'], { page });
+				data = await joplin.data.get([parentType, message.fromItemId, 'notes'], { page });
 				page++;
 				itemIds.push(...data.items.map((i: any) => i.id));
 			} while (data.has_more);

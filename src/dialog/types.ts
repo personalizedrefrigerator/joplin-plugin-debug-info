@@ -5,7 +5,8 @@ export enum PanelMessageType {
 
 	GetItemMetadataRequest = 'itemMetadata',
 	GetResourcesLinkedToNote = 'getResources',
-	GetNotesLinkedToResource = 'getNotes',
+	GetAssociatedNotes = 'getNotes',
+	GetNotesInFolder = 'getNotesInFolder',
 	GetSelectedNoteIds = 'getSelection',
 
 	PermanentDeleteItem = 'permanentlyDeleteItem',
@@ -32,9 +33,10 @@ interface NoteResourcesRequest {
 	noteId: string;
 }
 
-interface NotesLinkedToResourceRequest {
-	type: PanelMessageType.GetNotesLinkedToResource;
-	resourceId: string;
+interface NoteListRequest {
+	type: PanelMessageType.GetAssociatedNotes;
+	fromItemType: ModelType;
+	fromItemId: string;
 }
 
 interface SelectedNoteIdsRequest {
@@ -71,7 +73,7 @@ interface RegexSearchRequest {
 export type WebViewToPanelMessage =
 	| SelectedNoteIdsRequest
 	| NoteResourcesRequest
-	| NotesLinkedToResourceRequest
+	| NoteListRequest
 	| DeleteItemRequest
 	| OpenItemRequest
 	| RegexSearchRequest

@@ -115,15 +115,20 @@ const makeItemTable = async (
 				noteId: itemId,
 			}),
 		);
-	} else if (metadata.type_ === ModelType.Resource) {
+	} else if (
+		metadata.type_ === ModelType.Resource ||
+		metadata.type_ === ModelType.Folder ||
+		metadata.type_ === ModelType.Tag
+	) {
 		addTableRow(
 			'notes',
 			makeItemListButton(
 				{
-					type: PanelMessageType.GetNotesLinkedToResource,
-					resourceId: itemId,
+					type: PanelMessageType.GetAssociatedNotes,
+					fromItemType: metadata.type_,
+					fromItemId: itemId,
 				},
-				localization.linkedNotesMayBeOutdated,
+				metadata.type_ === ModelType.Resource ? localization.linkedNotesMayBeOutdated : '',
 			),
 		);
 	}
