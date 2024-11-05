@@ -1,5 +1,6 @@
 import joplin from 'api';
 import {
+	CommandName,
 	PanelMessageResponse,
 	PanelMessageResponseType,
 	PanelMessageType,
@@ -271,6 +272,26 @@ export default class ItemInfoDialog {
 				type: PanelMessageResponseType.SelectedNoteIds,
 				selectedNoteIds: await joplin.workspace.selectedNoteIds(),
 			};
+		} else if (message.type === PanelMessageType.RunCommand) {
+			try {
+				if (!Object.values(CommandName).includes(message.commandName)) {
+					throw new Error(`Not implemented by plugin: Running command ${message.commandName}.`);
+				}
+
+				const output = await joplin.commands.execute(message.commandName);
+
+				return {
+					type: PanelMessageResponseType.CommandOutput,
+					isError: false,
+					outputText: `${output}`,
+				};
+			} catch (error) {
+				return {
+					type: PanelMessageResponseType.CommandOutput,
+					isError: true,
+					outputText: `${error}`,
+				};
+			}
 		} else {
 			const exhaustivenessCheck: never = message;
 			throw new Error(`Unknown message type, ${exhaustivenessCheck}.`);

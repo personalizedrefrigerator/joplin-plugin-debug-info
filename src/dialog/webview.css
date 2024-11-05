@@ -93,6 +93,22 @@ table th {
 	padding: 2px;
 }
 
+.command-output {
+	font-family: monospace;
+	background-color: black;
+	color: white;
+	padding: 0;
+}
+
+.command-output > .log.-error {
+	color: var(--joplin-color-error);
+	background-color: var(--joplin-warning-background-color);
+}
+
+.command-button {
+	margin: 5px;
+}
+
 details > summary {
 	cursor: pointer;
 }

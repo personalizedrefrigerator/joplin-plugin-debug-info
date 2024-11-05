@@ -1,4 +1,6 @@
 import localization from '../../../localization';
+import makeDropdown from '../makeDropdown';
+import makeCommandTool from './makeCommandTool';
 import makeSearchTool from './makeSearchTool';
 
 const makeMoreToolsList = () => {
@@ -9,14 +11,11 @@ const makeMoreToolsList = () => {
 	labelElement.innerText = localization.moreTools;
 	container.appendChild(labelElement);
 
-	const searchDropdown = document.createElement('details');
-	const searchSummary = document.createElement('summary');
-	searchDropdown.appendChild(searchSummary);
-	searchSummary.innerText = localization.moreTools__search;
-	searchDropdown.replaceChildren(searchSummary, makeSearchTool());
+	const commandDropdown = makeDropdown(localization.moreTools__runCommand, makeCommandTool());
 
-	container.appendChild(searchDropdown);
+	const searchDropdown = makeDropdown(localization.moreTools__search, makeSearchTool());
 
+	container.replaceChildren(labelElement, commandDropdown, searchDropdown);
 	return container;
 };
 

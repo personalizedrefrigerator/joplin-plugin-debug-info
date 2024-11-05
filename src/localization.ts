@@ -16,6 +16,10 @@ interface AppLocalization {
 
 	moreTools: string;
 	moreTools__search: string;
+	moreTools__runCommand: string;
+	moreTools__runCommand__description: string;
+	custom: string;
+
 	loadMore: string;
 	advanced: string;
 
@@ -36,6 +40,10 @@ const defaultStrings: AppLocalization = {
 
 	moreTools: 'More tools: ',
 	moreTools__search: 'Search',
+	moreTools__runCommand: 'Run a command',
+	moreTools__runCommand__description:
+		'This tool allows running certain Joplin commands and observing their output. At present, only a small subset of all commands are listed.',
+	custom: 'Custom',
 	loadMore: 'Load more',
 	advanced: 'Advanced',
 

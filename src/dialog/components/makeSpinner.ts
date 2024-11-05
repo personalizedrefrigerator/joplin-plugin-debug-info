@@ -3,9 +3,12 @@ type SpinnerOption<T> = {
 	value: T;
 };
 
-const makeSpinner = <T>(options: SpinnerOption<T>[]) => {
+const makeSpinner = <T>(options: SpinnerOption<T>[], onChange?: () => void) => {
 	const container = document.createElement('div');
 	const spinner = document.createElement('select');
+	if (onChange) {
+		spinner.onchange = onChange;
+	}
 
 	let index = 0;
 	for (const option of options) {

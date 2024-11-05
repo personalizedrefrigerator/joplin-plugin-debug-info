@@ -14,6 +14,8 @@ export enum PanelMessageType {
 
 	OpenInJoplin = 'openInJoplin',
 	GetAllMatchingRegex = 'allMatchingRegex',
+
+	RunCommand = 'runCommand',
 }
 
 interface NoteSelectionChangeMessage {
@@ -70,6 +72,18 @@ interface RegexSearchRequest {
 	page: number;
 }
 
+export enum CommandName {
+	NewNote = 'newNote',
+	Synchronize = 'synchronize',
+	HistoryBackward = 'historyBackward',
+	HistoryForward = 'historyForward',
+}
+
+interface RunCommandRequest {
+	type: PanelMessageType.RunCommand;
+	commandName: CommandName;
+}
+
 export type WebViewToPanelMessage =
 	| SelectedNoteIdsRequest
 	| NoteResourcesRequest
@@ -77,13 +91,15 @@ export type WebViewToPanelMessage =
 	| DeleteItemRequest
 	| OpenItemRequest
 	| RegexSearchRequest
-	| ItemMetadataRequest;
+	| ItemMetadataRequest
+	| RunCommandRequest;
 
 export enum PanelMessageResponseType {
 	ItemMetadata = 'itemMetadata',
 	IdListResponse = 'resources',
 	SearchResults = 'searchResults',
 	SelectedNoteIds = 'selectedNoteIds',
+	CommandOutput = 'commandOutput',
 }
 
 export interface ItemMetadata {
@@ -120,11 +136,18 @@ interface SelectedNoteIdsResponse {
 	selectedNoteIds: string[];
 }
 
+interface RunCommandResponse {
+	type: PanelMessageResponseType.CommandOutput;
+	isError: boolean;
+	outputText: string;
+}
+
 export type PanelMessageResponse =
 	| SelectedNoteIdsResponse
 	| ItemMetadataResponse
 	| RegexSearchResponse
 	| NoteResourcesResponse
+	| RunCommandResponse
 	| null;
 
 type OnMessageListener = (event: { message: PanelToWebViewMessage }) => void;
