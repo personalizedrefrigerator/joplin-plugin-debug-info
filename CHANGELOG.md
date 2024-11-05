@@ -1,3 +1,8 @@
+# 0.3.0
+
+- Added a "run command" tool with 2-3 runnable Joplin plugin API commands.
+- Item properties dialog: Allow listing the notes associated with a folder or tag.
+
 # 0.2.0
 
 - Show `blob_updated_time`, `encryption_blob_encrypted`, and `title` resource properties.
