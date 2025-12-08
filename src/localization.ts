@@ -64,6 +64,36 @@ const localizations: Record<string, AppLocalization> = {
 	es: {
 		...defaultStrings,
 	},
+	hr: {
+		permanentlyDelete: 'Izbriši zauvijek',
+		deleteToTrash: 'Premjesti u smeće',
+		showInNoteViewer: 'Prikaži u uređivaču/pregledniku',
+		go: 'Idi',
+		refresh: 'Osvježi',
+		toggleNoteInfo: 'Prikaži/Sakrij informacije o bilješci',
+		noteInfoHeader: 'Dodatak za informacije o bilješci',
+		propertyDescription__notDeleted: 'Nije izbrisano',
+		linkedNotesMayBeOutdated:
+			"Povezane bilješke.\nNapomena: Joplin ih ne aktualizira često. Ponovno pokretanje Joplina i čekanje 30 sekundi bi trebalo prisiliti da se ovo aktualizira.",
+
+		moreTools: 'Više alata: ',
+		moreTools__search: 'Traži',
+		moreTools__runCommand: 'Pokreni naredbu',
+		moreTools__runCommand__description:
+			'Ovaj alat omogućuje pokretanje određenih Joplin naredbi i pregled njihovih rezultata. Trenutačno je naveden samo mali podskup svih naredbi.',
+		custom: 'Prilagođeno',
+		loadMore: 'Učitaj više',
+		advanced: 'Napredno',
+
+		propertyDescription__encryptedLocally: 'Još nije dešifrirano',
+		propertyDescription__decryptedLocally: 'Dešifrirano lokalno',
+		propertyDescription__notDue: 'Još nije potrebno',
+		propertyDescription__notAConflict: 'Nije konflikt',
+		propertyDescription__isAConflict: 'Je konflikt',
+
+		continueDangerousAction: (actionName, itemTitle) =>
+			`${actionName} ${itemTitle}.\nNastaviti? Ovo može dovesti do gubitka podataka.`,
+	},
 };
 
 let localization: AppLocalization | undefined;
